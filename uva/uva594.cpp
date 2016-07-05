@@ -9,9 +9,7 @@ typedef vector<pii> vii;
 int main(){
     int n=-1 ;
     int count=1;
-    cin>>n;
-    while (n!=-1){
-
+    while (cin>>n){
         bitset<32> bs(n);
         bitset<32> clone;
         for (int i=0; i<8; i++){
@@ -23,8 +21,5 @@ int main(){
 
         printf("%d converts to %d\n", n, clone);
 
-        count ++;
-        n=-1;
-        cin>>n;
     }
 }
