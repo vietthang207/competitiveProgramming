@@ -8,11 +8,11 @@ typedef vector<pii> vii;
 
 int main(){
     int n=-1 ;
-    int count=1;
+    int coun=1;
     cin>>n;
     while (n!=-1){
 
-        count ++;
+        coun ++;
         n=-1;
         cin>>n;
     }
