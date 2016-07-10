@@ -6,9 +6,9 @@ typedef pair<int, int> pii;
 typedef vector<int> vi;
 typedef vector<pii> vii;
 
-int a[11111];
-int lis[11111];
-vi v[11111];
+int a[1111111];
+int lis[1111111];
+vi v[1111111];
 //bool ok[11111];
 
 int main(){
