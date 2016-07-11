@@ -14,12 +14,15 @@ int main(){
         cin>>n;
         int a[n];
         for (int i=0; i<n; i++) cin>>a[i];
-        int res = 1;
-        int sum = a[n]+;
+        if (n==1) {
+			cout<<1<<endl;
+			continue;
+		}
+		int res = 2;
+        int sum = a[0];
         int curr = a[n];
-        int prev = a[n-1];
-        for (int i=n-2; i>=0; i--){
-            if (a[i]+sum){
+        for (int i=1; i<n-1; i++){
+            if (a[i]+sum<a[i+1]){
                 res++;
                 sum+=a[i];
             }
