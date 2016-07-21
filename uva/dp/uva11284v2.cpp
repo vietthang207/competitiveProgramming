@@ -25,9 +25,11 @@ double tsp(int pos, int mask){
 	double tmp = 0;
 	int mask1 = mask;
 	if (store[pos]!=-1){
-		res -= save[pos];
-		tmp -= save[pos];
-		mask1 = mask | (1<<(store[pos]));
+		if ( (mask & (1<<store[pos])) == 0){
+			res -= save[pos];
+			tmp -= save[pos];
+			mask1 = mask | (1<<(store[pos]));
+		}
 	}
 
 	if (mask1 == ((1<<n)-1)){
@@ -36,11 +38,11 @@ double tsp(int pos, int mask){
 	} 
 
 	for (int i=0; i<v; i++){
-		if (store[i]==-1 || visited[i]) continue;
+		if (store[i]==-1 || visited[i] || i==pos) continue;
 		visited[i] = true;
 		double tmp1 = tmp + am[pos][i] + tsp(i, mask1);
 		visited[i] = false;
-		if (tmp1<res) res = tmp1;
+		res = min(res, tmp1);	
 	}
 	solved[pos][mask] = true;
 	return memo[pos][mask] = res;
@@ -68,6 +70,7 @@ int main(){
 			int x,y;
 			cin>>x>>y;
 			cin>>am[x][y];
+			am[y][x] = am[x][y];
 		}
 
 		for (int i=0; i<v; i++){
@@ -99,6 +102,7 @@ int main(){
 
 		visited[0] = true;
 		double m = tsp(0,0);
-		printf("%.2f\n", -m);
+		if (m+EP <0) printf("Daniel can save $%.2f\n", -m);
+		else cout<<"Don't leave the house"<<endl;
 	}
 }
