@@ -20,7 +20,7 @@ void cal(int n){
 			if (j>0) tmp+=sum[n][i][j-1];
 			if (i>0 && j>0) tmp-=sum[n][i-1][j-1];
 			sum[n][i][j] = tmp;
-			cout<<tmp<<endl;
+			// cout<<tmp<<endl;
 		}
 	}
 }
@@ -30,6 +30,7 @@ ll getSum(int n, int i1, int j1, int i2, int j2){
 	if (i1>0) res-=sum[n][i1-1][j2];
 	if (j1>0) res-=sum[n][i2][j1-1];
 	if (i1>0 && j1>0) res+=sum[n][i1-1][j1-1];
+	// cout<<res<<endl;
 	return res;
 }
 
@@ -37,12 +38,16 @@ ll kadane(int i1, int j1, int i2, int j2){
 	ll res = getSum(0, i1,j1,i2,j2);
 	ll s = 0;
 	for (int i=0; i<a; i++){
+		// cout<<res<<endl;
 		ll cur = getSum(i,i1,j1,i2,j2);
 		if (s+cur<0) {
 			res = max(res, s+cur);
 			s = 0;
 		}
-		else s+=cur;
+		else {
+			s+=cur;
+			res = max(res, s);
+		}
 	}
 	return res;
 }
@@ -64,6 +69,7 @@ int main(){
 			for (int j1=0; j1<c; j1++){
 				for (int i2=i1; i2<b; i2++){
 					for (int j2=j1; j2<c; j2++){
+						// cout<<i1<<" "<<j1<<" "<<i2<<" "<<j2<<endl;
 						ll tmp = kadane(i1,j1,i2,j2);
 						res = max(res, tmp);
 						// cout<<res<<endl;
@@ -73,6 +79,6 @@ int main(){
 		}
 
 		cout<<res<<endl;
-
+		if (t!=T-1) cout<<endl;
 	}
 }
