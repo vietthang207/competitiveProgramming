@@ -33,7 +33,7 @@ int main(){
 		topo.clear();
 		for (int i=0; i<30; i++) al[i].clear();
 
-			int coun = 0;
+		int coun = 0;
 		map<char, int> m;
 		map<int, int> weight;
 		getline(cin, tmp);
