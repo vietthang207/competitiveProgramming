@@ -14,40 +14,57 @@ const ll MIN31 = -2147483648;
 ll _sieve_size;
 bitset<10000010> bs;   // 10^7 should be enough for most cases
 vi primes;   // compact list of primes in form of vector<int>
-
+bitset<1000010> rbs;
 
 // first part
 
-void sieve(ll upperbound) {          // create list of primes in [0..upperbound]
-  _sieve_size = upperbound + 1;                   // add 1 to include upperbound
+void sieve(ll size) {          // create list of primes in [0..upperbound]
+  _sieve_size = size + 1;                   // add 1 to include upperbound
   bs.set();                                                 // set all bits to 1
   bs[0] = bs[1] = 0;                                     // except index 0 and 1
   for (ll i = 2; i <= _sieve_size; i++) if (bs[i]) {
     // cross out multiples of i starting from i * i!
   	for (ll j = i * i; j <= _sieve_size; j += i) bs[j] = 0;
-    primes.push_back((int)i);  // also add this vector containing list of primes
+  	primes.push_back((int)i);
 } }                                           // call this method in main method
 
 bool isPrime(ll N) {                 // a good enough deterministic prime tester
   if (N <= _sieve_size) return bs[N];                   // O(1) for small primes
   for (int i = 0; i < (int)primes.size(); i++)
   	if (N % primes[i] == 0) return false;
-  primes.push_back(N);
   return true;                    // it takes longer time if N is a large prime!
 }                      // note: only work for N <= (last prime in vi "primes")^2
 
 ll n,m;
 vector<ll> a;
 int main(){
-	sieve(10000000);
+	sieve(50000);
+
 	while (cin>>n){
 		cin>>m;
-		// cout<<n<<" "<<m<<endl;
 		a.clear();
-		for (ll i=n; i<=m; i++){
-			if (isPrime(i)) {
-				a.push_back(i);
-				// cout<<i<<endl;
+		rbs.set();
+
+		for (int i:primes){
+			ll cur = ll(i);
+			// cout<<cur<<endl;
+			if (cur>m) break;
+			ll first;
+			if (n%cur==0) first = n;
+			else first = n+cur-n%cur;
+
+			for (first; first<=m; first+=cur){
+				if (first!=cur) {
+					// cout<<"cross "<<first<<endl;
+					rbs[first-n] = 0;
+				}
+			}
+		}
+
+		for (int i=0; i<m-n+1; i++){
+			if (rbs[i] && n+i>1) {
+				// cout<<n+i<<endl;
+				a.push_back(n+i);
 			}
 		}
 
