@@ -15,11 +15,12 @@ const int size = 2000001;
 int sieve[size];
 
 void buildSieve(){
-	memset(sieve, 0, sizeof sieve);
+	for (int i=0; i<size; i++) sieve[i] = i;
+
 	for (int i=2; i<size; i++){
-		if (sieve[i]!=0) continue;
-		for (int j=1; i+i*j<=size; j++){
-			sieve[i+i*j]+=j;
+		if (sieve[i]!=i) continue;
+		for (int j=i; j<=size; j+=i){
+			sieve[j] = (sieve[j]/i)*(i-1);
 		}
 	}
 }
@@ -28,7 +29,7 @@ int memo[size];
 ll sum[size];
 
 int eulerPhi(int n){
-	return n-sieve[n]-1;
+	return sieve[n];
 }
 
 int dephi(int n){
@@ -39,13 +40,14 @@ int dephi(int n){
 
 int main(){
     buildSieve();
-    dephi(2000000);
+    memset(memo, -1, sizeof memo);
+    for(int i=2; i<size; i++) dephi(i);
     sum[0] = memo[0];
     for (int i=1; i<size; i++){
     	sum[i] = memo[i]+sum[i-1];
     }
-    for (int i=0; i<14; i++)
-    	cout<<sieve[i]<<" "<<eulerPhi(i)<<endl;
+    // for (int i=0; i<14; i++)
+    	// cout<<memo[i]<<" "<<eulerPhi(i)<<endl;
     int T; cin>>T;
     for (int t=0; t<T; t++){
     	int a, b;
