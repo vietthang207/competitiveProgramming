@@ -16,6 +16,7 @@ vi al[55000];
 int memo[55000];
 bool visited[55000];
 stack<int> st;
+bool onStack[55000];
 
 int dfs(int v){
 	// cout<<v<<endl;
@@ -23,7 +24,13 @@ int dfs(int v){
 	visited[v] = true;
 	int size = al[v].size();
 	if (size==0) return memo[v] = 1;
-	if (!visited[al[v][0]]) return memo[v] = 1 + dfs(al[v][0]);
+	int next = al[v][0];
+	if (!visited[next]) {
+		st.push(next);
+		onStack[next] = true;
+		memo[v] = dfs(al[v][0]);
+		st.pop(next);
+	}
 	return memo[v] = 1 + memo[al[v][0]];
 }
 

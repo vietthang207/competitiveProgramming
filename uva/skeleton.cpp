@@ -11,11 +11,12 @@ const double EP=1e-6;
 const ll MAX31 = 2147483647;
 const ll MIN31 = -2147483648;
 
-int main(){
-    int n;
-    int coun=1;
-    while (cin>>n){
+int n;
 
-        coun ++;
-    }
+int main(){
+	int coun=1;
+	while (cin>>n){
+
+		coun ++;
+	}
 }

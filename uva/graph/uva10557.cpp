@@ -49,6 +49,8 @@ int main(){
 				}
 			}
 		}
+		bool res = false;
+		if (sp[])
 
 		coun ++;
 	}
