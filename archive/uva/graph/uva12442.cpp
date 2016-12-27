@@ -15,23 +15,17 @@ int T, n;
 vi al[55000];
 int memo[55000];
 bool visited[55000];
-stack<int> st;
-bool onStack[55000];
 
 int dfs(int v){
-	// cout<<v<<endl;
-	if (visited[v]) return memo[v];
 	visited[v] = true;
-	int size = al[v].size();
-	if (size==0) return memo[v] = 1;
+	if (al[v].size()==0) return memo[v] = 1;
 	int next = al[v][0];
+    int r = 1;
 	if (!visited[next]) {
-		st.push(next);
-		onStack[next] = true;
-		memo[v] = dfs(al[v][0]);
-		st.pop(next);
+		r = 2+ dfs(next);
 	}
-	return memo[v] = 1 + memo[al[v][0]];
+	visited[v] = false;
+	return memo[v]=r;
 }
 
 int main(){
@@ -46,12 +40,14 @@ int main(){
 			cin>>v1>>v2;
 			v1--; v2--;
 			al[v1].push_back(v2);
+			notSource[v2] = true;
 		}
 
-		int res, maxi=MIN31;
+		int res, maxi=-999;
 		for (int i=0; i<n; i++){
-			if (memo[i]==-1) dfs(i);
-			cout<<memo[i]<<endl;
+			if (memo[i]==-1) {
+                dfs(i);
+			}
 			if (memo[i]>maxi){
 				maxi = memo[i];
 				res = i;

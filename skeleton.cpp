@@ -12,5 +12,5 @@ const ll MAX31 = 2147483647;
 const ll MIN31 = -2147483648;
 
 int main(){
-	ios_base::sync_with_stdio(false);
+	ios::sync_with_stdio(0);
 }
