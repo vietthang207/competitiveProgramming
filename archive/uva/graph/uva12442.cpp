@@ -22,7 +22,7 @@ int dfs(int v){
 	int next = al[v][0];
     int r = 1;
 	if (!visited[next]) {
-		r = 2+ dfs(next);
+		r += dfs(next);
 	}
 	visited[v] = false;
 	return memo[v]=r;
@@ -40,7 +40,6 @@ int main(){
 			cin>>v1>>v2;
 			v1--; v2--;
 			al[v1].push_back(v2);
-			notSource[v2] = true;
 		}
 
 		int res, maxi=-999;
