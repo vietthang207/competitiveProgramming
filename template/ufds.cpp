@@ -12,7 +12,7 @@ struct UnionFind {
     
     int find(int i) { return p[i]==i ? i : p[i] = find(p[i]); }
     bool sameSet(int i, int j) { return find(i) == find(j); }
-    void union(int i, int j) {
+    void unionSet(int i, int j) {
         if (sameSet(i, j)) return;
         cnt--; int x = find(i); int y = find(j);
         if (r[x]>r[y]) { p[y] = x; sz[x] += sz[y]; }
@@ -20,4 +20,4 @@ struct UnionFind {
     }
     int sizeOfSet(int i) { return sz[find(i)]; }
     int numSets() { return cnt; }
-}
+};
