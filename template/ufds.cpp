@@ -1,27 +1,23 @@
 
 //UFDS adapted from Steven Halim's code
-class UnionFind {
-    private:
-        vi p, rank, setSize;
-        int numSets;
-    public:
 
-        UnionFind(int N) { setSize.assign(N, 1); numSets = N; rank.assign(N, 0); p.assign(N, 0); for (int i = 0; i < N; i++) p[i] = i; }
+struct UnionFind {
+    vi p, r, sz;
+    int cnt;
 
-        //findSet with path compression
-        int findSet(int i) { return (p[i] == i) ? i : (p[i] = findSet(p[i])); }
-
-        bool isSameSet(int i, int j) { return findSet(i) == findSet(j); }
-
-        void unionSet(int i, int j) {
-            if (isSameSet(i, j)) return;
-            numSets--; int x = findSet(i), y = findSet(j);
-            // rank is used to keep the tree short
-            if (rank[x] > rank[y]) { p[y] = x; setSize[x] += setSize[y]; }
-            else                   { p[x] = y; setSize[y] += setSize[x]; if (rank[x] == rank[y]) rank[y]++; }
-        }
-
-        int numDisjointSets() { return numSets; }
-
-        int sizeOfSet(int i) { return setSize[findSet(i)]; }
-};
+    UnionFind(int n) {
+        p.assign(n, 0); r.assign(n, 0); sz.assign(n, 1); cnt = n;
+        for (int i=0; i<n; i++) p[i] = i;
+    }
+    
+    int find(int i) { return p[i]==i ? i : p[i] = find(p[i]); }
+    bool sameSet(int i, int j) { return find(i) == find(j); }
+    void union(int i, int j) {
+        if (sameSet(i, j)) return;
+        cnt--; int x = find(i); int y = find(j);
+        if (r[x]>r[y]) { p[y] = x; sz[x] += sz[y]; }
+        else {p[x] = y; sz[y] += sz[x]; if (r[x]==r[y]) r[y]++;}
+    }
+    int sizeOfSet(int i) { return sz[find(i)]; }
+    int numSets() { return cnt; }
+}
