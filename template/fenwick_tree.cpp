@@ -3,27 +3,24 @@
 using namespace std;
 
 typedef vector<int> vi;
-#define LSOne(S) (S & (-S))
 
-class FenwickTree {
-private:
+struct FenwickTree {
   vi ft;
 
-public:
   FenwickTree() {}
   // initialization: n + 1 zeroes, ignore index 0
   FenwickTree(int n) { ft.assign(n + 1, 0); }
 
-  int rsq(int b) {                                     // returns RSQ(1, b)
-    int sum = 0; for (; b; b -= LSOne(b)) sum += ft[b];
+  int query(int b) {                                     // returns RSQ(1, b)
+    int sum = 0; for (; b; b -= b&(-b)) sum += ft[b];
     return sum; }
 
-  int rsq(int a, int b) {                              // returns RSQ(a, b)
-    return rsq(b) - (a == 1 ? 0 : rsq(a - 1)); }
+  int query(int a, int b) {                              // returns RSQ(a, b)
+    return query(b) - (a == 1 ? 0 : query(a - 1)); }
 
   // adjusts value of the k-th element by v (v can be +ve/inc or -ve/dec)
-  void adjust(int k, int v) {                    // note: n = ft.size() - 1
-    for (; k < (int)ft.size(); k += LSOne(k)) ft[k] += v; }
+  void update(int k, int v) {                    // note: n = ft.size() - 1
+    for (; k < (int)ft.size(); k += k&(-k)) ft[k] += v; }
 };
 
 int main() {              // idx   0 1 2 3 4 5 6 7  8 9 10, no index 0!
